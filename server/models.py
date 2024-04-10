@@ -35,4 +35,4 @@ class RestaurantPizza(db.Model, SerializerMixin):
     price = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"<Restaurant Pizza {self.id}: {self.name}>"
+        return f"<Restaurant Pizza {self.id}: {self.price}>"
