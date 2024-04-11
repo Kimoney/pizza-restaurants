@@ -22,9 +22,9 @@ This API provides endpoints to manage restaurants and pizzas. It allows users to
 ## Endpoints
 ### GET /restaurants
 Returns a list of all restaurants.
-## Request
+#### Request
 `GET /restaurants`
-## Response
+#### Response
 ```json
 [
   {
@@ -41,9 +41,9 @@ Returns a list of all restaurants.
 ```
 ### GET /restaurants/:id
 Returns details of a specific restaurant by ID.
-## Request
+#### Request
 `GET /restaurants/1`
-## Response
+#### Response
 ```json
 {
   "id": 1,
@@ -65,17 +65,17 @@ Returns details of a specific restaurant by ID.
 ```
 ## DELETE /restaurants/:id
 Deletes a restaurant by ID and all restaurant-pizzas associated with a restaurant.
-## Request
+#### Request
 `DELETE /restaurants/1`
-## Response
+#### Response
 ```json
 {}
 ```
 ## GET /pizzas
 Returns a list of all pizzas.
-## Request
+#### Request
 `GET /pizzas`
-## Response
+#### Response
 ```json
 [
   {
@@ -92,9 +92,9 @@ Returns a list of all pizzas.
 ```
 ## POST /restaurant_pizzas
 Creates a new restaurant-pizza association.
-## Request
+#### Request
 `POST /restaurant_pizzas`
-## Response
+#### Response
 ```json
 {
   "id": 1,
