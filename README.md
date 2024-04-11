@@ -63,7 +63,7 @@ Returns details of a specific restaurant by ID.
   ]
 }
 ```
-## DELETE /restaurants/:id
+### DELETE /restaurants/:id
 Deletes a restaurant by ID and all restaurant-pizzas associated with a restaurant.
 #### Request
 `DELETE /restaurants/1`
@@ -71,7 +71,7 @@ Deletes a restaurant by ID and all restaurant-pizzas associated with a restauran
 ```json
 {}
 ```
-## GET /pizzas
+### GET /pizzas
 Returns a list of all pizzas.
 #### Request
 `GET /pizzas`
@@ -90,7 +90,7 @@ Returns a list of all pizzas.
   }
 ]
 ```
-## POST /restaurant_pizzas
+### POST /restaurant_pizzas
 Creates a new restaurant-pizza association.
 #### Request
 `POST /restaurant_pizzas`
