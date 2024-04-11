@@ -57,6 +57,10 @@ def restaurants_by_id(id):
             resp = make_response(jsonify(resp_dict))
             return resp
         else:
+            # First delete any RestaurantPizzas that are associated with the Restaurant we want to delete
+            RestaurantPizza.query.filter_by(restaurant_id=id).delete()
+            
+            # Delete restaurant now
             db.session.delete(restaurant)
             db.session.commit()
 
