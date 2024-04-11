@@ -64,11 +64,8 @@ def restaurants_by_id(id):
             db.session.delete(restaurant)
             db.session.commit()
 
-            resp_dict = {
-                "deletion_success": True,
-                "message": "Restaurant Deleted Successfully!"
-            }
-            resp = make_response(resp_dict, 200)
+            resp_dict = {}
+            resp = make_response(jsonify(resp_dict), 200)
             return resp
 
 @app.route('/pizzas')
