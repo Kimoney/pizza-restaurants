@@ -20,7 +20,8 @@ with app.app_context():
     # Populate pizzas table
     for x in range(25):
         test_ingridients = fake.words(nb=5)
-        pizza1 = Pizza(name=fake.language_name(), ingridients=', '.join(test_ingridients))
+        test_ingridients_uppercased = [ingredient.title() for ingredient in test_ingridients]
+        pizza1 = Pizza(name=fake.language_name(), ingridients=', '.join(test_ingridients_uppercased))
         db.session.add(pizza1)
         db.session.commit()
     

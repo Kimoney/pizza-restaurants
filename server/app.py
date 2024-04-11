@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, make_response, jsonify
 from flask_migrate import Migrate
 from models import db, Restaurant, Pizza, RestaurantPizza
 
@@ -17,19 +17,93 @@ def index():
 
 @app.route('/restaurants')
 def restaurants():
-    return '<h1>Return JSON data of the Restaurant Model</h1>'
+    restaurants = []
+    for restaurant in Restaurant.query.all():
+        rest_dict = {
+            'id': restaurant.id,
+            'name': restaurant.name,
+            'address': restaurant.address
+        }
+        restaurants.append(rest_dict)
+    resp = make_response(jsonify(restaurants), 200)
+    return resp
 
 @app.route('/restaurants/<int:id>', methods=['GET', 'DELETE'])
 def restaurants_by_id(id):
-    return '<h1>If the Restaurant exists, return JSON with associated pizzas </h1>'
+    if request.method == 'GET':
+        restaurant = Restaurant.query.filter(Restaurant.id == id).first()
+        if not restaurant:
+            resp_dict = {'error': "Restaurant not found!"}
+            resp = make_response(jsonify(resp_dict))
+            return resp
+        else:
+            rest_dict = {
+                'id': restaurant.id,
+                'name': restaurant.name,
+                'address': restaurant.address,
+                'pizzas': [{
+                    'id': pizza.id,
+                    'name': pizza.name,
+                    'ingridients': pizza.ingridients
+                } for pizza in restaurant.pizzas]
+            }
+            resp = make_response(jsonify(rest_dict), 200)
+            return resp
+    
+    elif request.method == 'DELETE':
+        restaurant = Restaurant.query.filter(Restaurant.id == id).first()
+        if not restaurant:
+            resp_dict = {'error': "Restaurant not found!"}
+            resp = make_response(jsonify(resp_dict))
+            return resp
+        else:
+            db.session.delete(restaurant)
+            db.session.commit()
+
+            resp_dict = {
+                "deletion_success": True,
+                "message": "Restaurant Deleted Successfully!"
+            }
+            resp = make_response(resp_dict, 200)
+            return resp
 
 @app.route('/pizzas')
 def pizzas():
-    return '<h1>Return JSON data of the Pizza Model</h1>'
+    pizzas = []
+    for pizza in Pizza.query.all():
+        pizza_dict = {
+            'id': pizza.id,
+            'name': pizza.name,
+            'ingridients': pizza.ingridients
+        }
+        pizzas.append(pizza_dict)
+    resp = make_response(pizzas, 200)
+    return resp
 
-@app.route('/restaurant_pizzas')
+@app.route('/restaurant_pizzas', methods=['POST'])
 def restaurant_pizzas():
-    return '<h1>This route should create a new RestaurantPizza that is associated with an existing Pizza and Restaurant.</h1>'
+    if request.method == 'POST':
+        try:
+            restaurant_pizza = RestaurantPizza(
+                price=request.args.get('price'),
+                restaurant_id=request.args.get('restaurant_id'),
+                pizza_id=request.args.get('pizza_id')
+            )
+            db.session.add(restaurant_pizza)
+            db.session.commit()
+            pizza_id=request.args.get('pizza_id')
+            pizza = Pizza.query.filter(Pizza.id == pizza_id).first()
+            pizza_dict = {
+            'id': pizza.id,
+            'name': pizza.name,
+            'ingridients': pizza.ingridients
+            }
+            resp = make_response(jsonify(pizza_dict), 200)
+            return resp
+        except ValueError:
+            error_msg = {'errors': ["validation errors"]}
+            resp = make_response(jsonify(error_msg), 400)
+            return resp
 
 
 if __name__ == '__main__':
