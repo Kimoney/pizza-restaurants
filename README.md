@@ -17,6 +17,7 @@ This API provides endpoints to manage restaurants and pizzas. It allows users to
     - `flask db init`
     - `flask db migrate -m "First Migration"`
     - `flask db upgrade head`
+    - Test and populate database with tests data `python seed.py`
 5. Start the Flask Server using `flask run` or `python app.py`
 ## Endpoints
 ### GET /restaurants
