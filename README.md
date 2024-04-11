@@ -1,4 +1,4 @@
-# Pizza Restaurants.
+# Pizza Restaurants
 ## Introduction
 This API provides endpoints to manage restaurants and pizzas. It allows users to retrieve information about restaurants and pizzas, add new restaurant-pizza associations, and delete restaurants.
 ## Dependencies
@@ -17,7 +17,7 @@ This API provides endpoints to manage restaurants and pizzas. It allows users to
     - `flask db init`
     - `flask db migrate -m "First Migration"`
     - `flask db upgrade head`
-    - Test and populate database with tests data `python seed.py`
+    - Test and populate database with test data `python seed.py`
 5. Start the Flask Server using `flask run` or `python app.py`
 ## Endpoints
 ### GET /restaurants
@@ -64,7 +64,7 @@ Returns details of a specific restaurant by ID.
 }
 ```
 ## DELETE /restaurants/:id
-Deletes a restaurant by ID.
+Deletes a restaurant by ID and all restaurant-pizzas associated with a restaurant.
 ## Request
 `DELETE /restaurants/1`
 ## Response
@@ -72,7 +72,7 @@ Deletes a restaurant by ID.
 {}
 ```
 ## GET /pizzas
-Returns a list of all pizza
+Returns a list of all pizzas.
 ## Request
 `GET /pizzas`
 ## Response
